@@ -50,6 +50,73 @@ export default function SponsorDashboard() {
     }
   };
 
+  const cardData = [
+    {
+      title: "👤 Profile",
+      onClick: () => navigate("/sponsor/profile", { state: { sponsor } }),
+      content: (
+        <>
+          <p><strong>Name:</strong> {sponsor.name}</p>
+          <p><strong>Username:</strong> @{sponsor.name?.toLowerCase().replace(/\s/g, "")}</p>
+          <p><strong>About:</strong> {sponsor.description}</p>
+          <p><strong>Planned Contribution:</strong> ${sponsor.amount}</p>
+        </>
+      ),
+    },
+    {
+      title: "📢 Post Sponsorship",
+      onClick: () => navigate("/sponsor/postsponsorship", { state: { sponsor } }),
+      content: (
+        <>
+          <p>Create new opportunities and offers for creators.</p>
+        </>
+      ),
+    },
+    {
+      title: "📬 Applications",
+      onClick: () => navigate("/sponsor/applications", { state: { sponsor } }),
+      content: (
+        <>
+          <p>You have 3 new collaboration requests.</p>
+        </>
+      ),
+    },
+    {
+      title: "🤝 Ongoing Deals",
+      onClick: () => navigate("/sponsor/deals", { state: { sponsor } }),
+      content: (
+        <>
+          <p>🎬 NFT Promo with @johndoe - Milestone 2</p>
+          <p>🎧 Web3 Music Collab - In Progress</p>
+        </>
+      ),
+    },
+    {
+      title: "💸 Payments",
+      onClick: () => navigate("/sponsor/payments", { state: { sponsor } }),
+      content: (
+        <>
+          <p>Escrow Smart Contract Status</p>
+          <button
+            onClick={releasePayment}
+            className="mt-2 bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-lg w-full transition-all duration-300"
+          >
+            Release Payment
+          </button>
+        </>
+      ),
+    },
+    {
+      title: "📝 Feedback",
+      onClick: () => navigate("/sponsor/feedback", { state: { sponsor } }),
+      content: (
+        <>
+          <p>⭐ Rate your recent collaborators</p>
+        </>
+      ),
+    },
+  ];
+
   return (
     <div className="min-h-screen px-6 py-10 text-white bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] font-poppins relative overflow-hidden">
       {/* Gradient Glow Blobs */}
@@ -80,84 +147,14 @@ export default function SponsorDashboard() {
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-        {[
-          {
-            title: "👤 Profile",
-            content: (
-              <>
-                <p><strong>Name:</strong> {sponsor.name}</p>
-                <p><strong>Username:</strong> @{sponsor.name?.toLowerCase().replace(/\s/g, "")}</p>
-                <p><strong>About:</strong> {sponsor.description}</p>
-                <p><strong>Planned Contribution:</strong> ${sponsor.amount}</p>
-                <button className="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg w-full transition-all duration-300">
-                  Edit Profile
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "📢 Post Sponsorship",
-            content: (
-              <>
-                <p>Create new opportunities and offers for creators.</p>
-                <button className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg w-full transition-all duration-300">
-                  New Sponsorship
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "📬 Applications",
-            content: (
-              <>
-                <p>You have 3 new collaboration requests.</p>
-                <button className="mt-4 bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-lg w-full transition-all duration-300">
-                  View Applications
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "🤝 Ongoing Deals",
-            content: (
-              <>
-                <p>🎬 NFT Promo with @johndoe - Milestone 2</p>
-                <p>🎧 Web3 Music Collab - In Progress</p>
-              </>
-            ),
-          },
-          {
-            title: "💸 Payments",
-            content: (
-              <>
-                <p>Escrow Smart Contract Status</p>
-                <button
-                  onClick={releasePayment}
-                  className="mt-4 bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-lg w-full transition-all duration-300"
-                >
-                  Release Payment
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "📝 Feedback",
-            content: (
-              <>
-                <p>⭐ Rate your recent collaborators</p>
-                <button className="mt-4 bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded-lg w-full transition-all duration-300">
-                  Give Feedback
-                </button>
-              </>
-            ),
-          },
-        ].map((card, index) => (
+        {cardData.map((card, index) => (
           <motion.div
             key={index}
+            onClick={card.onClick}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-gradient-to-br from-[#2e2e57] via-[#3c3c6b] to-[#4a4a80] border border-purple-500/40 text-white p-6 rounded-2xl shadow-2xl backdrop-blur-md hover:scale-[1.03] transition-transform duration-300"
+            className="cursor-pointer bg-gradient-to-br from-[#2e2e57] via-[#3c3c6b] to-[#4a4a80] border border-purple-500/40 text-white p-6 rounded-2xl shadow-2xl backdrop-blur-md hover:scale-[1.03] transition-transform duration-300"
           >
             <h2 className="text-xl font-bold mb-4 text-cyan-300 drop-shadow-sm">
               {card.title}

@@ -61,69 +61,96 @@ export default function CreatorDashboard() {
   const cardData = [
     {
       title: "Profile",
-      component: <ProfileCard creatorInfo={creatorInfo} />,
       content: (
         <>
           <p><strong>Name:</strong> {creatorInfo.name}</p>
           <p><strong>Username:</strong> {creatorInfo.username}</p>
           <p><strong>Wallet:</strong> {creatorInfo.wallet}</p>
           <p><strong>Bio:</strong> {creatorInfo.bio}</p>
-          <button className="mt-4 btn">Edit Profile</button>
+          <button
+            className="mt-4 btn"
+            onClick={() => navigate("/creator/profile")}
+          >
+            Edit Profile
+          </button>
         </>
       ),
     },
     {
       title: "Offers",
-      component: <OffersCard />,
       content: (
         <>
           <p>You have 2 new sponsorship invites.</p>
-          <button className="mt-4 btn">View Offers</button>
+          <button
+            className="mt-4 btn"
+            onClick={() => navigate("/creator/offers")}
+          >
+            View Offers
+          </button>
         </>
       ),
     },
     {
       title: "Portfolio",
-      component: <PortfolioCard />,
       content: (
         <>
           <p>Showcase your top work and previous collaborations.</p>
-          <button className="mt-4 btn">Manage Portfolio</button>
+          <button
+            className="mt-4 btn"
+            onClick={() => navigate("/creator/portfolio")}
+          >
+            Manage Portfolio
+          </button>
         </>
       ),
     },
     {
       title: "Milestones",
-      component: <MilestonesCard />,
       content: (
-        <ul className="list-disc ml-4 text-sm space-y-1">
-          <li>🎯 NFT drop with Acme Sponsor - Milestone 2</li>
-          <li>🎯 Social media promo - Awaiting Approval</li>
-        </ul>
+        <>
+          <ul className="list-disc ml-4 text-sm space-y-1">
+            <li>🎯 NFT drop with Acme Sponsor - Milestone 2</li>
+            <li>🎯 Social media promo - Awaiting Approval</li>
+          </ul>
+          <button
+            className="mt-4 btn"
+            onClick={() => navigate("/creator/milestones")}
+          >
+            View Milestones
+          </button>
+        </>
       ),
     },
     {
       title: "History",
-      component: <HistoryCard />,
       content: (
         <>
           <p>Completed 5 collaborations with 90% success rate.</p>
-          <button className="mt-4 btn">View History</button>
+          <button
+            className="mt-4 btn"
+            onClick={() => navigate("/creator/history")}
+          >
+            View History
+          </button>
         </>
       ),
     },
     {
       title: "Feedback",
-      component: <FeedbackCard />,
       content: (
         <>
           <p>🌟 “Great partner to work with!” - Sponsor X</p>
-          <button className="mt-4 btn">See All Reviews</button>
+          <button
+            className="mt-4 btn"
+            onClick={() => navigate("/creator/feedback")}
+          >
+            See All Reviews
+          </button>
         </>
       ),
     },
   ];
-
+  
   return (
     <div className="min-h-screen px-6 py-10 text-white bg-gradient-to-br from-[#0f172a] to-[#1e293b] font-poppins">
       {/* Header */}
