@@ -6,7 +6,6 @@ import Signup from "./pages/Signup";
 import CreatorDashboard from "./pages/CreatorDashboard";
 import SponsorDashboard from "./pages/SponsorDashboard";
 import "./assets/logo.png"
-import LogoSplash from "./components/logoSplash";
 import OffersCard from "./components/creator/OffersCard";
 import PortfolioCard from "./components/creator/PortfolioCard";
 import MilestonesCard from "./components/creator/MilestonesCard";
@@ -53,7 +52,7 @@ function App() {
         <Route path="/sponsor/payments" element={<Payment />} />
         <Route path="/sponsor/feedback" element={<Feedback />} />
       
-        
+    
      
         {/* Add more routes as needed */}
     
