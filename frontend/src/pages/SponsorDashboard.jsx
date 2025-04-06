@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ethers } from "ethers";
 import { motion } from "framer-motion";
+import ConnectWallet from "../components/WalletConnect";
+const rpcUrl = "https://lb.drpc.org/ogrpc?network=sepolia&dkey=AiUXd-BWJkD2jbay87BvdRp84ssnEs8R8JjzKjrWkQAY";
 
 export default function SponsorDashboard() {
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ export default function SponsorDashboard() {
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const provider = new ethers.JsonRpcProvider(rpcUrl);
         await provider.send("eth_requestAccounts", []);
         const signer = provider.getSigner();
         const address = await signer.getAddress();
@@ -37,7 +39,7 @@ export default function SponsorDashboard() {
     const sponsorshipId = 1;
 
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const provider = new ethers.JsonRpcProvider(rpcUrl);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(contractAddress, abi, signer);
       const tx = await contract.releasePayment(sponsorshipId);
@@ -61,12 +63,13 @@ export default function SponsorDashboard() {
           💼 Sponsor Dashboard
         </h1>
         <div className="flex gap-4">
-          <button
+          {/* <button
             onClick={connectWallet}
             className="bg-purple-600 hover:bg-purple-700 px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg"
           >
             Connect Wallet
-          </button>
+          </button> */}
+          <ConnectWallet />
           <button
             onClick={() => navigate("/")}
             className="bg-red-500 hover:bg-red-600 px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg"

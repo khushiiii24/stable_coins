@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
 import ProfileCard from "../components/creator/ProfileCard";
 import OffersCard from "../components/creator/OffersCard";
 import PortfolioCard from "../components/creator/PortfolioCard";
 import MilestonesCard from "../components/creator/MilestonesCard";
 import HistoryCard from "../components/creator/HistoryCard";
 import FeedbackCard from "../components/creator/FeedbackCard";
+import ConnectWallet from "../components/WalletConnect";
+const rpcUrl = "https://lb.drpc.org/ogrpc?network=sepolia&dkey=AiUXd-BWJkD2jbay87BvdRp84ssnEs8R8JjzKjrWkQAY";
 
 
 export default function CreatorDashboard() {
+  // const {sponsorContract} = state
   const navigate = useNavigate();
 
   const connectWallet = async () => {
       if (window.ethereum) {
         try {
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          // const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const provider = new ethers.JsonRpcProvider(rpcUrl);
           await provider.send("eth_requestAccounts", []);
           const signer = provider.getSigner();
           const address = await signer.getAddress();
@@ -126,13 +131,8 @@ export default function CreatorDashboard() {
         <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 drop-shadow-lg">
           🎨 Creator Dashboard
         </h1>
-        <div className="flex gap-4">
-          <button
-            onClick={connectWallet}
-            className="bg-purple-600 hover:bg-purple-700 px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg"
-          >
-            Connect Wallet
-          </button>
+        <div className="flex gap-4 cursor-pointer">
+          <ConnectWallet />
         <button
           onClick={() => navigate("/")}
           className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 transition shadow-lg font-medium"

@@ -67,7 +67,7 @@ export default function Signup() {
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             className="p-4 rounded-xl bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
+          /> 
 
           <div className="flex gap-4 items-center mt-2">
             <label className="text-sm text-gray-300">I am a:</label>

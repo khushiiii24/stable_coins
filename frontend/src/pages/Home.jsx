@@ -25,12 +25,7 @@ export default function Home() {
       {/* Main Content */}
       {showMain && (
         <>
-          {/* Header */}
-          <header className="flex justify-between items-center px-8 py-6 bg-black/30 backdrop-blur-sm border-b border-white/10 z-10">
-            <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-              CollabVerse
-            </h1>
-          </header>
+        
 
           {/* Hero Section */}
           <main className="flex-grow flex flex-col items-center justify-center text-center px-6 py-20 relative z-10">
