@@ -1,8 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ProfileCard from "../components/creator/ProfileCard";
+import OffersCard from "../components/creator/OffersCard";
+import PortfolioCard from "../components/creator/PortfolioCard";
+import MilestonesCard from "../components/creator/MilestonesCard";
+import HistoryCard from "../components/creator/HistoryCard";
+import FeedbackCard from "../components/creator/FeedbackCard";
+
 
 export default function CreatorDashboard() {
   const navigate = useNavigate();
+
+  const connectWallet = async () => {
+      if (window.ethereum) {
+        try {
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          await provider.send("eth_requestAccounts", []);
+          const signer = provider.getSigner();
+          const address = await signer.getAddress();
+          alert(`Wallet connected: ${address}`);
+        } catch (err) {
+          console.error("Wallet connection failed", err);
+        }
+      } else {
+        alert("MetaMask not detected");
+      }
+    };
 
   const [creatorInfo, setCreatorInfo] = useState({
     name: "Jane Doe",
@@ -18,109 +41,119 @@ export default function CreatorDashboard() {
     if (user?.type === "creator") {
       setCreatorInfo(user);
     }
-    // Trigger animation
     setTimeout(() => setLoaded(true), 100);
   }, []);
 
+  const cardThemes = [
+    "bg-gradient-to-br from-[#1f2945] to-[#111887]",
+    "bg-gradient-to-br from-[#1e3a8a] to-[#312e81]",
+    "bg-gradient-to-br from-[#065f46] to-[#064e3b]",
+    "bg-gradient-to-br from-[#7c3aed] to-[#4c1d95]",
+    "bg-gradient-to-br from-[#b91c1c] to-[#7f1d1d]",
+    "bg-gradient-to-br from-[#ca8a04] to-[#78350f]",
+  ];
+
+  const cardData = [
+    {
+      title: "Profile",
+      component: <ProfileCard creatorInfo={creatorInfo} />,
+      content: (
+        <>
+          <p><strong>Name:</strong> {creatorInfo.name}</p>
+          <p><strong>Username:</strong> {creatorInfo.username}</p>
+          <p><strong>Wallet:</strong> {creatorInfo.wallet}</p>
+          <p><strong>Bio:</strong> {creatorInfo.bio}</p>
+          <button className="mt-4 btn">Edit Profile</button>
+        </>
+      ),
+    },
+    {
+      title: "Offers",
+      component: <OffersCard />,
+      content: (
+        <>
+          <p>You have 2 new sponsorship invites.</p>
+          <button className="mt-4 btn">View Offers</button>
+        </>
+      ),
+    },
+    {
+      title: "Portfolio",
+      component: <PortfolioCard />,
+      content: (
+        <>
+          <p>Showcase your top work and previous collaborations.</p>
+          <button className="mt-4 btn">Manage Portfolio</button>
+        </>
+      ),
+    },
+    {
+      title: "Milestones",
+      component: <MilestonesCard />,
+      content: (
+        <ul className="list-disc ml-4 text-sm space-y-1">
+          <li>🎯 NFT drop with Acme Sponsor - Milestone 2</li>
+          <li>🎯 Social media promo - Awaiting Approval</li>
+        </ul>
+      ),
+    },
+    {
+      title: "History",
+      component: <HistoryCard />,
+      content: (
+        <>
+          <p>Completed 5 collaborations with 90% success rate.</p>
+          <button className="mt-4 btn">View History</button>
+        </>
+      ),
+    },
+    {
+      title: "Feedback",
+      component: <FeedbackCard />,
+      content: (
+        <>
+          <p>🌟 “Great partner to work with!” - Sponsor X</p>
+          <button className="mt-4 btn">See All Reviews</button>
+        </>
+      ),
+    },
+  ];
+
   return (
-    <div
-      className="min-h-screen px-6 py-10 text-white"
-      style={{
-        background: "linear-gradient(to bottom right, #1a1a2e, #16213e)",
-        fontFamily: "'Poppins', sans-serif",
-      }}
-    >
+    <div className="min-h-screen px-6 py-10 text-white bg-gradient-to-br from-[#0f172a] to-[#1e293b] font-poppins">
       {/* Header */}
       <header className="flex justify-between items-center mb-10">
-        <h1 className="text-3xl font-bold text-indigo-400">🎨 Creator Dashboard</h1>
+        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 drop-shadow-lg">
+          🎨 Creator Dashboard
+        </h1>
+        <div className="flex gap-4">
+          <button
+            onClick={connectWallet}
+            className="bg-purple-600 hover:bg-purple-700 px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg"
+          >
+            Connect Wallet
+          </button>
         <button
           onClick={() => navigate("/")}
-          className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg"
+          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 transition shadow-lg font-medium"
         >
           Logout
         </button>
+        </div>
       </header>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[
-          {
-            title: "Profile",
-            content: (
-              <>
-                <p><strong>Name:</strong> {creatorInfo.name}</p>
-                <p><strong>Username:</strong> {creatorInfo.username}</p>
-                <p><strong>Wallet:</strong> {creatorInfo.wallet}</p>
-                <p><strong>Bio:</strong> {creatorInfo.bio}</p>
-                <button className="mt-4 bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
-                  Edit Profile
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "Offers",
-            content: (
-              <>
-                <p>You have 2 new sponsorship invites.</p>
-                <button className="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg">
-                  View Offers
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "Portfolio",
-            content: (
-              <>
-                <p>Showcase your top work and previous collaborations.</p>
-                <button className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">
-                  Manage Portfolio
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "Milestones",
-            content: (
-              <ul className="list-disc ml-4 text-sm">
-                <li>🎯 NFT drop with Acme Sponsor - Milestone 2</li>
-                <li>🎯 Social media promo - Awaiting Approval</li>
-              </ul>
-            ),
-          },
-          {
-            title: "History",
-            content: (
-              <>
-                <p>Completed 5 collaborations with 90% success rate.</p>
-                <button className="mt-4 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg">
-                  View History
-                </button>
-              </>
-            ),
-          },
-          {
-            title: "Feedback",
-            content: (
-              <>
-                <p>🌟 “Great partner to work with!” - Sponsor X</p>
-                <button className="mt-4 bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded-lg">
-                  See All Reviews
-                </button>
-              </>
-            ),
-          },
-        ].map((card, index) => (
+      {/* Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {cardData.map((card, index) => (
           <div
             key={index}
-            className={`bg-gray-800 rounded-xl p-6 shadow-md flex flex-col justify-between h-[260px] opacity-0 translate-y-4 transition-all duration-700 ease-out ${
-              loaded ? "opacity-100 translate-y-0" : ""
-            }`}
+            className={`p-6 rounded-2xl shadow-lg text-white transition-all duration-700 transform ${
+              loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            } ${cardThemes[index % cardThemes.length]}`}
             style={{ transitionDelay: `${index * 100}ms` }}
           >
-            <h2 className="text-xl font-semibold text-indigo-300 mb-2">{card.title}</h2>
-            <div className="text-sm flex-grow">{card.content}</div>
+            <h2 className="text-2xl font-semibold mb-3 text-white drop-shadow">{card.title}</h2>
+            <div className="text-sm space-y-1">{card.content}</div>
           </div>
         ))}
       </div>
