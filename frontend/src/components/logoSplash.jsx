@@ -5,12 +5,12 @@ export default function LogoSplash() {
   const [scale, setScale] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setScale(true), 10); // animate quickly
+    const timer = setTimeout(() => setScale(true), 1000); // animate quickly
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-[#0D0D2B]">
+    <div className="flex items-center justify-center h-screen bg-black z-50">
       <img
         src={logo}
         alt="CollabVerse Logo"
